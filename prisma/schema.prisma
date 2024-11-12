@@ -19,3 +19,8 @@ model Post {
   title     String
   content   String
 }
+
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String
+}
