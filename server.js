@@ -19,8 +19,71 @@ app.use(express.urlencoded({extended: true}));
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient();
 
-// Main landing page
+//Google API setup
+require('dotenv').config();
+const axios = require('axios');
+
+const API_KEY = process.env.GOOGLE_API_KEY;
+
+// Route to render the EJS pages with API key
+app.get('/:page', (req, res) => {
+  const page = req.params.page;
+  res.render(`pages/${page}`, { googleApiKey: process.env.GOOGLE_API_KEY });
+});
+
+async function getPlaceDetails(placeName) {
+  const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json`;
+
+  try {
+    const response = await axios.get(url, {
+      params: {
+        input: placeName,
+        inputtype: 'textquery',
+        fields: 'formatted_address,name,geometry',
+        key: API_KEY,
+      },
+    });
+
+    console.log('Place details:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error calling Google Places API:', error.message);
+    throw error;
+  }
+}
+
+getPlaceDetails('Eiffel Tower');
+
+
+
+/////////
+//PAGES//
+/////////
+// location page
 app.get('/', async function(req, res) {
+
+  // Try-Catch for any errors
+  try {
+      // Get all locations
+      const places = await prisma.location.findMany({
+              orderBy: [
+                {
+                  id: 'desc'
+                }
+              ]
+      });
+
+      // Render all locations
+      await res.render('pages/locations', { places: places });
+    } catch (error) {
+      res.render('pages/locations');
+      console.log(error);
+    } 
+});
+
+
+// Main landing page
+app.get('/home', async function(req, res) {
 
     // Try-Catch for any errors
     try {
@@ -56,17 +119,19 @@ app.post('/new', async function(req, res) {
     
     // Try-Catch for any errors
     try {
+        console.log("Received form data:", req.body);  // Add this line for debugging
+
         // Get the title and content from submitted form
-        const { title, content } = req.body;
+        const { name, description } = req.body;
 
         // Reload page if empty title or content
-        if (!title || !content) {
+        if (!name || !description) {
             console.log("Unable to create new post, no title or content");
             res.render('pages/new');
         } else {
             // Create post and store in database
-            const blog = await prisma.post.create({
-                data: { title, content },
+            const place = await prisma.location.create({
+                data: { name, description },
             });
 
             // Redirect back to the homepage
@@ -84,7 +149,7 @@ app.post("/delete/:id", async (req, res) => {
     const { id } = req.params;
     
     try {
-        await prisma.post.delete({
+        await prisma.location.delete({
             where: { id: parseInt(id) },
         });
       
@@ -96,9 +161,10 @@ app.post("/delete/:id", async (req, res) => {
     }
   });
 
+//demo page
 app.get('/demo', function(req, res) {
   res.render('pages/demo');
 });
-  
+
 // Tells the app which port to run on
 app.listen(8080);

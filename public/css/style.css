@@ -35,3 +35,14 @@
 .cancel-create-post {
     text-align: center;
 }
+
+/* for google */
+#place-picker-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#place-picker-container {
+    text-align: left;
+}

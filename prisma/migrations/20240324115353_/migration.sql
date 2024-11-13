@@ -12,4 +12,12 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")   
-)
+);
+
+CREATE TABLE "Location" {
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
+};

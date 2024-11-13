@@ -13,14 +13,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Post model represents individual blog posts
-model Post {
-  id        Int       @id @default(autoincrement())
-  title     String
-  content   String
-}
-
 model User {
   id        Int       @id @default(autoincrement())
   email     String
 }
+
+model Location {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+}
+

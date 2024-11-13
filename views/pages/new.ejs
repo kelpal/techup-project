@@ -17,43 +17,45 @@
     </script>
 </head>
 <body>
-    <main class="container">
-        <!-- Navbar which can be reused across other pages -->
-        <%- include('../partials/navbar'); %>
+  <gmpx-api-loader key="<%= googleApiKey %>" solution-channel="GMP_GE_placepicker_v1">
+  </gmpx-api-loader>
+  <main class="container">
+      <!-- Navbar which can be reused across other pages -->
+      <%- include('../partials/navbar'); %>
 
-        <!-- Create a new post headline -->
-        <div class="welcome-container">
-            <h1>Create a new post</h1>
-            <h2>Write whatever comes to mind!</h2>
-        </div>
+      <!-- Create a new post headline -->
+      <div class="welcome-container">
+          <h1>Add a new Lepak Corner</h1>
+          <h2>Start with where to find it...</h2>
+      </div>
 
-        <!-- Form to submit a new post -->
-        <div class="create-post-container">
-            <form method="post">
-                <fieldset>
-                  <label>
-                    Title
-                    <input name="title" placeholder="Write the name of this post..."/>
-                  </label>
-                </fieldset>
-
+      <!-- Form to submit a new post -->
+      <div class="create-post-container">
+          <form method="post">
+              <fieldset>
                 <label>
-                Content
-                <textarea name="content" placeholder="Write what's on your mind..." ></textarea>
+                  Location
+                  <input name="name" placeholder="Where is this place?"/>
                 </label>
-              
-                <input
-                  type="submit"
-                  value="🚀 Create post"
-                />
-              </form>
-        </div>
+              </fieldset>
 
-        <!-- Back to homepage -->
-        <div class="cancel-create-post">
-          <a href="/">Cancel! Take me back to my blog!</a>
-        </div>
-        
-    </main>
+              <label>
+                Description
+                <textarea name="description" placeholder="Talk about it..." ></textarea>
+              </label>
+            
+              <input
+                type="submit"
+                value="🚀 Add Lepak Corner"
+              />
+            </form>
+      </div>
+
+      <!-- Back to homepage -->
+      <div class="cancel-create-post">
+        <a href="/">Cancel! Let me look around.</a>
+      </div>
+      
+  </main>
 </body>
 </html>
