@@ -20,15 +20,19 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient();
 
 //Google API setup
-require('dotenv').config();
 const axios = require('axios');
 
 const API_KEY = process.env.GOOGLE_API_KEY;
 
 // Route to render the EJS pages with API key
-app.get('/:page', (req, res) => {
-  const page = req.params.page;
-  res.render(`pages/${page}`, { googleApiKey: process.env.GOOGLE_API_KEY });
+const path = require('path');
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views')); // Views directory setup
+
+app.use((req, res, next) => {
+  res.locals.googleApiKey = process.env.GOOGLE_API_KEY;
+  next();
 });
 
 async function getPlaceDetails(placeName) {
@@ -122,16 +126,16 @@ app.post('/new', async function(req, res) {
         console.log("Received form data:", req.body);  // Add this line for debugging
 
         // Get the title and content from submitted form
-        const { name, description } = req.body;
+        const { locationName, description } = req.body;
 
         // Reload page if empty title or content
-        if (!name || !description) {
+        if (!locationName || !description) {
             console.log("Unable to create new post, no title or content");
             res.render('pages/new');
         } else {
             // Create post and store in database
             const place = await prisma.location.create({
-                data: { name, description },
+                data: { locationName, description },
             });
 
             // Redirect back to the homepage

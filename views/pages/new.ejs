@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
     <link rel="stylesheet" href="/css/style.css" >
+    
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-B17ZYPML7V"></script>
     <script>
@@ -17,8 +20,8 @@
     </script>
 </head>
 <body>
-  <gmpx-api-loader key="<%= googleApiKey %>" solution-channel="GMP_GE_placepicker_v1">
-  </gmpx-api-loader>
+  <gmpx-api-loader key="<%= googleApiKey %>" solution-channel="GMP_GE_placepicker_v1"></gmpx-api-loader>
+  
   <main class="container">
       <!-- Navbar which can be reused across other pages -->
       <%- include('../partials/navbar'); %>
@@ -31,19 +34,26 @@
 
       <!-- Form to submit a new post -->
       <div class="create-post-container">
-          <form method="post">
+          <form method="post" id="createPostForm">
               <fieldset>
                 <label>
                   Location
-                  <input name="name" placeholder="Where is this place?"/>
+                  <!-- The place picker input -->
+                   
+                  <gmpx-place-picker
+                    name="locationName" 
+                    id="placePicker"
+                    placeholder="Enter an address"
+                  ></gmpx-place-picker>
+                  
                 </label>
               </fieldset>
 
               <label>
                 Description
-                <textarea name="description" placeholder="Talk about it..." ></textarea>
+                <textarea name="description" placeholder="Talk about it..."></textarea>
               </label>
-            
+
               <input
                 type="submit"
                 value="🚀 Add Lepak Corner"
@@ -57,5 +67,29 @@
       </div>
       
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const placePicker = document.getElementById('placePicker');
+      const locationNameInput = document.getElementById('locationNameInput');
+      
+      // When the place picker changes, update the hidden input field
+      placePicker.addEventListener('place_changed', () => {
+        const place = placePicker.getPlace();
+        if (place && place.name) {
+          locationNameInput.value = place.name; // Populate the hidden input field with the place name
+        }
+      });
+
+      // Optionally, you can add a listener for form submission to ensure the locationName is set
+      const form = document.getElementById('createPostForm');
+      form.addEventListener('submit', (event) => {
+        if (!locationNameInput.value) {
+          alert('Please select a location.');
+          event.preventDefault(); // Prevent form submission if location is not selected
+        }
+      });
+    });
+  </script>
 </body>
 </html>
