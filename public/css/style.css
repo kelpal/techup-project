@@ -86,6 +86,7 @@ display: inline;
 
 #search-input {
     width: 100%;
+    max-width: 800px;
     padding: 10px;
     font-size: 1rem;
     box-sizing: border-box; /* Ensure padding doesn't exceed container */
