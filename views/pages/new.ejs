@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add New Lepak Corner</title>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleApiKey %>&libraries=places"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
     <link rel="stylesheet" href="/css/style.css">
@@ -15,7 +14,6 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-B17ZYPML7V');
     </script>
 </head>
@@ -64,22 +62,26 @@
     </div>
 </main>
 
+<!-- Google Maps API script with the callback -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= googleApiKey %>&libraries=places&callback=initAutocomplete"></script>
+
 <script>
+    // Declare autocomplete globally
     let autocomplete;
 
     function initAutocomplete() {
         // Initialize the autocomplete object, restricting the search to geocode (address) types.
         const input = document.getElementById('autocomplete');
 
-        const autocomplete = new google.maps.places.Autocomplete(input, {
-          types: ['geocode', 'establishment'],
-          componentRestrictions: { country: 'SG' }
-      });
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            types: ['geocode', 'establishment'],
+            componentRestrictions: { country: 'SG' }
+        });
 
         // Optionally listen for place selection event
         autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          console.log("Selected Place:", place);
+            const place = autocomplete.getPlace();
+            console.log("Selected Place:", place);
         });
     }
 
@@ -93,9 +95,6 @@
             console.error('No place details available');
         }
     }
-
-    // Initialize the Autocomplete when the page loads
-    document.addEventListener('DOMContentLoaded', initAutocomplete);
 </script>
 </body>
 </html>
