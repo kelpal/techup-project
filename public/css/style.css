@@ -77,3 +77,16 @@ font-weight: bold;
 #map #infowindow-content {
 display: inline;
 }  
+
+.search-container {
+    max-width: 800px; /* Match .post-container */
+    margin: 20px auto; /* Center horizontally */
+    text-align: left;  /* Align text for the search box */
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensure padding doesn't exceed container */
+}

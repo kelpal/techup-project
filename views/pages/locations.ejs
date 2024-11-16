@@ -31,16 +31,52 @@
             <a href="/new" class="button" role="button">+ New Lepak Corner</a>
         </div>
 
+        <hr>
+
+
+        <!-- Add a search filter -->
+        <div class="search-container">
+            <label for="search-input">Search for a Lepak Corner:</label>
+            <input 
+                type="text" 
+                id="search-input" 
+                placeholder="Search by name or description"
+            />
+        </div>
+
+
+
         <!-- Show blog posts -->
-        <% places.forEach(location => { %>
-            <article class="post-container">
-                <h3><%= location.name %></h3>
-                <p><%= location.description %></p>
-                <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
-                    <button class="outline primary" type="submit">Delete</button>
-                </form>
-            </article>
-        <% }); %>
+        <div>
+            <% places.forEach(location => { %>
+                <article class="post-container">
+                    <h3 class="location-name"><%= location.name %></h3>
+                    <p class="location-description"><%= location.description %></p>
+                    <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
+                        <button class="outline primary" type="submit">Delete</button>
+                    </form>
+                </article>
+            <% }); %>
+        </div>
     </main>
+
+    <script>
+        // JavaScript for Search Filter
+        document.getElementById('search-input').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            const locations = document.querySelectorAll('.post-container');
+
+            locations.forEach(location => {
+                const name = location.querySelector('.location-name').textContent.toLowerCase();
+                const description = location.querySelector('.location-description').textContent.toLowerCase();
+
+                // Show or hide locations based on the search filter
+                if (name.includes(filter) || description.includes(filter)) {
+                    location.style.display = '';
+                } else {
+                    location.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
-</html>

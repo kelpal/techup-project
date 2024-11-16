@@ -35,6 +35,8 @@ app.use((req, res, next) => {
   next();
 });
 
+
+
 async function getPlaceDetails(placeName) {
   const url = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json`;
 
