@@ -126,16 +126,16 @@ app.post('/new', async function(req, res) {
         console.log("Received form data:", req.body);  // Add this line for debugging
 
         // Get the title and content from submitted form
-        const { locationName, description } = req.body;
+        const { name, description } = req.body;
 
         // Reload page if empty title or content
-        if (!locationName || !description) {
+        if (!name || !description) {
             console.log("Unable to create new post, no title or content");
             res.render('pages/new');
         } else {
             // Create post and store in database
             const place = await prisma.location.create({
-                data: { locationName, description },
+                data: { name, description },
             });
 
             // Redirect back to the homepage

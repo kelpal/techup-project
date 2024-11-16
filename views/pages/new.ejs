@@ -3,93 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
+    <title>Add New Lepak Corner</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleApiKey %>&libraries=places"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
-    <link rel="stylesheet" href="/css/style.css" >
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B17ZYPML7V"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-B17ZYPML7V');
-    </script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <gmpx-api-loader key="<%= googleApiKey %>" solution-channel="GMP_GE_placepicker_v1"></gmpx-api-loader>
-  
-  <main class="container">
-      <!-- Navbar which can be reused across other pages -->
-      <%- include('../partials/navbar'); %>
+<main class="container">
+    <!-- Navbar -->
+    <%- include('../partials/navbar'); %>
 
-      <!-- Create a new post headline -->
-      <div class="welcome-container">
-          <h1>Add a new Lepak Corner</h1>
-          <h2>Start with where to find it...</h2>
-      </div>
+    <div class="welcome-container">
+        <h1>Add a New Lepak Corner</h1>
+        <h2>Start with where to find it...</h2>
+    </div>
 
-      <!-- Form to submit a new post -->
-      <div class="create-post-container">
-          <form method="post" id="createPostForm">
-              <fieldset>
+    <div class="create-post-container">
+        <form method="post" id="createPostForm">
+            <fieldset>
                 <label>
-                  Location
-                  <!-- The place picker input -->
-                   
-                  <gmpx-place-picker
-                    name="locationName" 
-                    id="placePicker"
-                    placeholder="Enter an address"
-                  ></gmpx-place-picker>
-                  
+                    Location
+                    <input 
+                        type="text" 
+                        id="autocomplete" 
+                        placeholder="Enter an address" 
+                        name="name" 
+                        required
+                    />
                 </label>
-              </fieldset>
+            </fieldset>
 
-              <label>
+            <label>
                 Description
-                <textarea name="description" placeholder="Talk about it..."></textarea>
-              </label>
+                <textarea name="description" placeholder="Talk about it..." required></textarea>
+            </label>
 
-              <input
+            <!-- Hidden input to store place ID (or additional data if needed) -->
+            <input type="hidden" id="placeIdInput" name="placeId"/>
+
+            <input
                 type="submit"
                 value="🚀 Add Lepak Corner"
-              />
-            </form>
-      </div>
+            />
+        </form>
+    </div>
 
-      <!-- Back to homepage -->
-      <div class="cancel-create-post">
+    <div class="cancel-create-post">
         <a href="/">Cancel! Let me look around.</a>
-      </div>
-      
-  </main>
+    </div>
+</main>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const placePicker = document.getElementById('placePicker');
-      const locationNameInput = document.getElementById('locationNameInput');
-      
-      // When the place picker changes, update the hidden input field
-      placePicker.addEventListener('place_changed', () => {
-        const place = placePicker.getPlace();
-        if (place && place.name) {
-          locationNameInput.value = place.name; // Populate the hidden input field with the place name
-        }
-      });
+<script>
+    let autocomplete;
 
-      // Optionally, you can add a listener for form submission to ensure the locationName is set
-      const form = document.getElementById('createPostForm');
-      form.addEventListener('submit', (event) => {
-        if (!locationNameInput.value) {
-          alert('Please select a location.');
-          event.preventDefault(); // Prevent form submission if location is not selected
+    function initAutocomplete() {
+        // Initialize the autocomplete object, restricting the search to geocode (address) types.
+        const input = document.getElementById('autocomplete');
+        autocomplete = new google.maps.places.Autocomplete(input, {
+            types: ['geocode'], // Restrict results to addresses
+        });
+
+        // Add a listener to capture the place details when a place is selected
+        autocomplete.addListener('place_changed', handlePlaceSelect);
+    }
+
+    function handlePlaceSelect() {
+        const place = autocomplete.getPlace();
+
+        // Populate the hidden input with the place ID or other desired data
+        if (place && place.place_id) {
+            document.getElementById('placeIdInput').value = place.place_id;
+        } else {
+            console.error('No place details available');
         }
-      });
-    });
-  </script>
+    }
+
+    // Initialize the Autocomplete when the page loads
+    document.addEventListener('DOMContentLoaded', initAutocomplete);
+</script>
 </body>
 </html>
