@@ -60,12 +60,17 @@
     function initAutocomplete() {
         // Initialize the autocomplete object, restricting the search to geocode (address) types.
         const input = document.getElementById('autocomplete');
-        autocomplete = new google.maps.places.Autocomplete(input, {
-            types: ['geocode'], // Restrict results to addresses
-        });
 
-        // Add a listener to capture the place details when a place is selected
-        autocomplete.addListener('place_changed', handlePlaceSelect);
+        const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["geocode"], // Only allow address-like results
+        componentRestrictions: { country: "SG" }, // Restrict to Singapore
+      });
+
+        // Optionally listen for place selection event
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          console.log("Selected Place:", place);
+        });
     }
 
     function handlePlaceSelect() {
