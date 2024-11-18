@@ -277,15 +277,15 @@ display: inline;
   
   /* Checked state styles */
   .pill input[type="checkbox"]:checked + span {
-    background-color: var(--main-cta); /* Highlight background */
-    color: #fff;              /* Highlight text color */
-    border-color: var(--links-2);    /* Border color */
+    background-color: var(--links-3); /* Highlight background */
+    color: var(--off-white-0);              /* Highlight text color */
+    border-color: var(--links-3);    /* Border color */
     font-weight: bold;        /* Bold text */
   }
   
   /* Hover effect for unselected pills */
   .pill:hover span {
-    background-color: #e0e0e0;
+    background-color: var(--links-2);
   }
   
   /* Span styling */
@@ -293,10 +293,11 @@ display: inline;
     display: inline-block; /* Ensures the background applies to the whole area */
     width: 100%;          /* Ensures it spans the entire width of the container */
     height: 100%;         /* Ensures it spans the height of the container */
-    padding: 5px 10px;    /* Adds space within the pill */
+    padding: 10px 15px;    /* Adds space within the pill */
     border-radius: 25px;  /* Keeps the rounded corners */
     text-align: center;   /* Centers text inside the pill */
-    background-color: var(--off-white); /* Default background color */
+    background-color: var(--main-cta); /* Default background color */
+    color: var(--off-white);
     font-style: normal;
  
 }
@@ -307,10 +308,10 @@ display: inline;
     display: inline-block;
     padding: 8px 16px;
     margin: 5px 1px 0px;
-    border: 1px solid var(--light-3);
+    border: 1px solid var(--main-cta);
     border-radius: 25px;
-    background-color: var(--off-white);
-    color: var(--dark-1);
+    background-color: var(--off-white-0);
+    color: var(--main-cta);
     font-size: 0.85rem;
     text-align: center;
     white-space: nowrap;
