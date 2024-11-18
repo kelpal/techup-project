@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+
 .welcome-container {
     text-align: center;
 
@@ -161,8 +166,8 @@ display: inline;
 /* Attribute pills for locations.ejs */
 .attribute-pill {
     display: inline-block;
-    padding: 10px 20px;
-    margin: 5px;
+    padding: 8px 16px;
+    margin: 1px;
     border: 1px solid #ccc;
     border-radius: 15px;
     background-color: #f9f9f9;

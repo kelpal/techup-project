@@ -6,6 +6,7 @@
     <title>Locations</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
     <link rel="stylesheet" href="/css/style.css" >
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
     <!-- Add FontAwesome in your head tag -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -55,9 +56,11 @@
             <% places.forEach(location => { %>
               <article class="post-container">
                 <h3 class="location-name"><%= location.name %></h3>
+                <b>How to get there:</b>                
                 <p class="location-description"><%= location.description %></p>
           
                 <!-- Display associated attributes as pills -->
+                <b>Tags:</b>
                 <div class="attribute-pills">
                     <% location.locationAttributes.forEach(locationAttribute => { %>
                       <span class="attribute-pill"><%= locationAttribute.attribute.name %></span>
