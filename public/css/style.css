@@ -23,22 +23,40 @@
     margin-right: auto;
 }
 
+.post-container form {
+    display: flex;
+    justify-content: flex-end; /* Align button to the right */
+}
+
+/* Style the button to match the trash icon */
 .post-container form button {
-    font-size: 0.9rem;
-    padding: 10px 20px;
+    font-size: 1rem; /* Make text size smaller */
+    padding: 5px 10px; /* Smaller padding */
     margin: 5px;
-    border: 1px solid #e74c3c;
+    border: none; /* Remove default border */
     background-color: transparent;
     color: #e74c3c;
-    border-radius: 5px;
+    border-radius: 50%; /* Make button round */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
+    width: 40px; /* Set a fixed width to match trash icon size */
+    height: 40px; /* Set a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .post-container form button:hover {
     background-color: #e74c3c;
     color: white;
 }
+
+/* Optional: Add a trash can icon to the button */
+.post-container form button i {
+    font-size: 20px; /* Adjust size of the icon */
+    color: inherit; /* Inherit the button's text color */
+}
+
 
 .about-container {
     text-align: center;
