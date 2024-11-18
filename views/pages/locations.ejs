@@ -61,9 +61,10 @@
                   </div>
                   
           
-                <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
-                  <button class="outline primary" type="submit">Delete</button>
+                  <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
+                    <button class="outline primary" type="submit">Delete</button>
                 </form>
+                
               </article>
             <% }); %>
           </div>

@@ -33,7 +33,7 @@ model LocationAttribute {
   locationId  Int
   attributeId Int
 
-  location  Location  @relation(fields: [locationId], references: [id])
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
   attribute Attribute @relation(fields: [attributeId], references: [id])
 
   @@unique([locationId, attributeId]) // Prevent duplicate relationships

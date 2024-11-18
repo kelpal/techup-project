@@ -162,19 +162,37 @@ app.post('/new', async function(req, res) {
 // Delete a location by id
 app.post("/delete/:id", async (req, res) => {
     const { id } = req.params;
-    
+    console.log("Delete request received for ID:", id);  // Log received id
+
     try {
-        await prisma.location.delete({
+        // Check if the location exists before trying to delete it
+        const location = await prisma.location.findUnique({
+            where: { id: parseInt(id) }
+        });
+
+        if (!location) {
+            console.log("Location not found for id:", id);  // Log if the location does not exist
+            return res.redirect('/');  // Redirect if no location is found
+        }
+
+        console.log("Deleting location:", location);  // Log the location to be deleted
+
+        // Delete the location from the database
+        const deletedLocation = await prisma.location.delete({
             where: { id: parseInt(id) },
         });
-      
-        // Redirect back to the homepage
+
+        console.log("Deleted location:", deletedLocation);  // Log the result of the deletion
+
+        // Redirect to homepage after deletion
         res.redirect('/');
     } catch (error) {
-        console.log(error);
-        res.redirect('/');
+        console.error("Error deleting location:", error);  // Log any errors that occur during deletion
+        res.redirect('/');  // Redirect on error
     }
-  });
+});
+
+
 
 
 // Tells the app which port to run on
