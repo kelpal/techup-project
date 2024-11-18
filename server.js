@@ -88,39 +88,17 @@ app.get('/', async function(req, res) {
 });
 
 
-// Main landing page
-app.get('/home', async function(req, res) {
-
-    // Try-Catch for any errors
-    try {
-        // Get all blog posts
-        const blogs = await prisma.post.findMany({
-                orderBy: [
-                  {
-                    id: 'desc'
-                  }
-                ]
-        });
-
-        // Render the homepage with all the blog posts
-        await res.render('pages/home', { blogs: blogs });
-      } catch (error) {
-        res.render('pages/home');
-        console.log(error);
-      } 
-});
-
 // About page
 app.get('/about', function(req, res) {
     res.render('pages/about');
 });
 
-// New post page
+// New location page
 app.get('/new', function(req, res) {
     res.render('pages/new');
 });
 
-// Create a new post
+// Create a new location
 app.post('/new', async function(req, res) {
     
     // Try-Catch for any errors
@@ -132,7 +110,7 @@ app.post('/new', async function(req, res) {
 
         // Reload page if empty title or content
         if (!name || !description) {
-            console.log("Unable to create new post, no title or content");
+            console.log("Unable to create new location, no name or description");
             res.render('pages/new');
         } else {
             // Create post and store in database
@@ -150,7 +128,7 @@ app.post('/new', async function(req, res) {
 
 });
 
-// Delete a post by id
+// Delete a location by id
 app.post("/delete/:id", async (req, res) => {
     const { id } = req.params;
     
@@ -167,10 +145,6 @@ app.post("/delete/:id", async (req, res) => {
     }
   });
 
-//demo page
-app.get('/demo', function(req, res) {
-  res.render('pages/demo');
-});
 
 // Tells the app which port to run on
 app.listen(8080);

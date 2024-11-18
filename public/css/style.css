@@ -25,6 +25,22 @@
     margin-right: auto;
 }
 
+.post-container form button {
+    font-size: 0.9rem;
+    padding: 8px 15px;
+    border: 1px solid #e74c3c;
+    background-color: transparent;
+    color: #e74c3c;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.post-container form button:hover {
+    background-color: #e74c3c;
+    color: white;
+}
+
 .about-container {
     text-align: center;
 
