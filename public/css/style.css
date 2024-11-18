@@ -14,6 +14,7 @@
     --light: #f7ede6;
     --light-1: #f7d7d2;
     --light-2: #ebbcb0;
+    --light-3: #cfa297;
     
     --main-cta: #AD6A6C;
 
@@ -23,7 +24,6 @@
 }
 
 #input, textarea {
-    background-color: var(--off-white-0);
     color: var(--dark);
     outline: 1px solid var(--light-1);
 }
@@ -241,40 +241,71 @@ display: inline;
 
 
 /* General styles for the pills */
+/* Base pill styling */
 .attribute-pills {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-}
-
-/* Default state for pills */
-.pill {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 5px;
+  }
+  
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     border: 1px solid var(--main-cta);
     border-radius: 25px;
-    background-color: var(--off-white);
-    color: var(--dark);
-    cursor: pointer;
+    font-style: normal;
+    background-color: var(--main-cta);
+    color: var(--off-white);
     transition: all 0.3s ease-in-out;
+    font-size: 0.9rem;
+    position: relative;
+  }
+  
+  /* Hide the checkbox */
+  .pill input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Checked state styles */
+  .pill input[type="checkbox"]:checked + span {
+    background-color: var(--main-cta); /* Highlight background */
+    color: #fff;              /* Highlight text color */
+    border-color: var(--links-2);    /* Border color */
+    font-weight: bold;        /* Bold text */
+  }
+  
+  /* Hover effect for unselected pills */
+  .pill:hover span {
+    background-color: #e0e0e0;
+  }
+  
+  /* Span styling */
+  .pill span {
+    display: inline-block; /* Ensures the background applies to the whole area */
+    width: 100%;          /* Ensures it spans the entire width of the container */
+    height: 100%;         /* Ensures it spans the height of the container */
+    padding: 5px 10px;    /* Adds space within the pill */
+    border-radius: 25px;  /* Keeps the rounded corners */
+    text-align: center;   /* Centers text inside the pill */
+    background-color: var(--off-white); /* Default background color */
+    font-style: normal;
+ 
 }
   
-.pill:hover {
-    background-color: var(--light-1);
-}
-  
-
 
 /* Attribute pills for locations.ejs */
 .attribute-pill {
     display: inline-block;
     padding: 8px 16px;
     margin: 5px 1px 0px;
-    border: 1px solid var(--main-cta);
+    border: 1px solid var(--light-3);
     border-radius: 25px;
-    background-color: var(--light-1);
-    color: var(--links-3);
+    background-color: var(--off-white);
+    color: var(--dark-1);
     font-size: 0.85rem;
     text-align: center;
     white-space: nowrap;

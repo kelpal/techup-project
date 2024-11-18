@@ -56,18 +56,19 @@
             <fieldset>
                 <legend>Select Location Attributes</legend>
                 <div class="attribute-pills">
-                    <% attributes.forEach(attribute => { %>
-                      <label class="pill" data-value="<%= attribute.name %>">
-                        <input 
-                          type="checkbox" 
-                          name="attributes" 
-                          value="<%= attribute.id %>"
-                        >
-                        <%= attribute.name %>
-                      </label>
-                    <% }) %>
-                  </div>
-            </fieldset>
+                  <% attributes.forEach(attribute => { %>
+                    <label class="pill" data-value="<%= attribute.name %>">
+                      <input 
+                        type="checkbox" 
+                        name="attributes" 
+                        value="<%= attribute.id %>"
+                      >
+                      <span><%= attribute.name %></span>
+                    </label>
+                  <% }) %>
+                </div>
+              </fieldset>
+              
             
 
 
