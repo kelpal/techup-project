@@ -46,18 +46,29 @@
 
 
 
-        <!-- Show blog posts -->
+        <!-- Show locations -->
         <div>
             <% places.forEach(location => { %>
-                <article class="post-container">
-                    <h3 class="location-name"><%= location.name %></h3>
-                    <p class="location-description"><%= location.description %></p>
-                    <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
-                        <button class="outline primary" type="submit">Delete</button>
-                    </form>
-                </article>
+              <article class="post-container">
+                <h3 class="location-name"><%= location.name %></h3>
+                <p class="location-description"><%= location.description %></p>
+          
+                <!-- Display associated attributes as pills -->
+                <div class="attribute-pills">
+                    <% location.locationAttributes.forEach(locationAttribute => { %>
+                      <span class="attribute-pill"><%= locationAttribute.attribute.name %></span>
+                    <% }); %>
+                  </div>
+                  
+          
+                <form action="/delete/<%= location.id %>" method="post" onsubmit="return confirm('Do you really want to delete this location?');">
+                  <button class="outline primary" type="submit">Delete</button>
+                </form>
+              </article>
             <% }); %>
-        </div>
+          </div>
+          
+          
     </main>
 
     <script>

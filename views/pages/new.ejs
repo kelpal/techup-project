@@ -47,13 +47,29 @@
                 <textarea name="description" placeholder="Talk about it..." required></textarea>
             </label>
 
+            <!-- Location attributes pills -->
+            <fieldset>
+                <legend>Select Location Attributes</legend>
+                <div class="attribute-pills">
+                    <% attributes.forEach(attribute => { %>
+                      <label class="pill" data-value="<%= attribute.name %>">
+                        <input 
+                          type="checkbox" 
+                          name="attributes" 
+                          value="<%= attribute.id %>"
+                        >
+                        <%= attribute.name %>
+                      </label>
+                    <% }) %>
+                  </div>
+            </fieldset>
+            
+
+
             <!-- Hidden input to store place ID (or additional data if needed) -->
             <input type="hidden" id="placeIdInput" name="placeId"/>
 
-            <input
-                type="submit"
-                value="🚀 Add Lepak Corner"
-            />
+            <input type="submit" value="🚀 Add Lepak Corner"/>
         </form>
     </div>
 

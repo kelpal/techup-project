@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,13 +8,33 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String
+  id    Int    @id @default(autoincrement())
+  email String
 }
 
 model Location {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
+  id                  Int                 @id @default(autoincrement())
+  name                String
+  description         String
+  attributes          Attribute[]         @relation("LocationAttributes") // Many-to-many relation with Attribute
+  locationAttributes  LocationAttribute[]
 }
 
+model Attribute {
+  id                Int                 @id @default(autoincrement())
+  name              String              @unique
+  locations         Location[]          @relation("LocationAttributes") // Many-to-many relation with Location
+  locationAttributes LocationAttribute[]
+}
+
+/// Pivot table for the many-to-many relationship
+model LocationAttribute {
+  id          Int @id @default(autoincrement())
+  locationId  Int
+  attributeId Int
+
+  location  Location  @relation(fields: [locationId], references: [id])
+  attribute Attribute @relation(fields: [attributeId], references: [id])
+
+  @@unique([locationId, attributeId]) // Prevent duplicate relationships
+}

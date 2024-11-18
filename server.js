@@ -67,25 +67,33 @@ getPlaceDetails('Eiffel Tower');
 /////////
 // location page
 app.get('/', async function(req, res) {
-
-  // Try-Catch for any errors
   try {
-      // Get all locations
-      const places = await prisma.location.findMany({
-              orderBy: [
-                {
-                  id: 'desc'
-                }
-              ]
-      });
+    // Get all locations with their attributes
+    const places = await prisma.location.findMany({
+      orderBy: [{ id: 'desc' }],
+      include: {
+        locationAttributes: { // This is the relationship table
+          include: {
+            attribute: { // Include the attribute details (the name)
+              select: {
+                name: true, // Only fetch the name of the attribute
+              },
+            },
+          },
+        },
+      },
+    });
 
-      // Render all locations
-      await res.render('pages/locations', { places: places });
-    } catch (error) {
-      res.render('pages/locations');
-      console.log(error);
-    } 
+    console.log(places);
+
+    // Render all locations with attributes
+    await res.render('pages/locations', { places: places });
+  } catch (error) {
+    console.log(error);
+    res.render('pages/locations', { places: [] }); // Pass an empty array on error
+  }
 });
+
 
 
 // About page
@@ -94,39 +102,62 @@ app.get('/about', function(req, res) {
 });
 
 // New location page
-app.get('/new', function(req, res) {
-    res.render('pages/new');
+// app.get('/new', function(req, res) {
+//     res.render('pages/new');
+// });
+
+app.get('/new', async (req, res) => {
+  try {
+    // Fetch all attributes from the database
+    const attributes = await prisma.attribute.findMany();
+    
+    // Render the new page with the attributes
+    res.render('pages/new', { attributes });
+  } catch (error) {
+    console.error('Error fetching attributes:', error);
+    res.status(500).send('An error occurred');
+  }
 });
+
 
 // Create a new location
 app.post('/new', async function(req, res) {
-    
-    // Try-Catch for any errors
-    try {
-        console.log("Received form data:", req.body);  // Add this line for debugging
+  try {
+      console.log("Received form data:", req.body);  // Debugging line
 
-        // Get the title and content from submitted form
-        const { name, description } = req.body;
+      const { name, description, attributes } = req.body;
 
-        // Reload page if empty title or content
-        if (!name || !description) {
-            console.log("Unable to create new location, no name or description");
-            res.render('pages/new');
-        } else {
-            // Create post and store in database
-            const place = await prisma.location.create({
-                data: { name, description },
-            });
-
-            // Redirect back to the homepage
-            res.redirect('/');
-        }
-      } catch (error) {
-        console.log(error);
-        res.render('pages/new');
+      // Reload page if empty title or content
+      if (!name || !description) {
+          console.log("Unable to create new location, no name or description");
+          return res.render('pages/new');
       }
 
+      // If no attributes are selected, set an empty array to avoid issues
+      const selectedAttributes = Array.isArray(attributes) ? attributes : attributes ? [attributes] : [];
+
+      // Create the new location and associate attributes
+      const place = await prisma.location.create({
+          data: {
+              name,
+              description,
+              // Relate selected attributes to the new location
+              locationAttributes: {
+                  create: selectedAttributes.map(attributeId => ({
+                      attributeId: parseInt(attributeId) // Make sure it's the correct data type
+                  }))
+              }
+          }
+      });
+
+      // Redirect back to the homepage
+      res.redirect('/');
+  } catch (error) {
+      console.log(error);
+      res.render('pages/new');
+  }
 });
+
 
 // Delete a location by id
 app.post("/delete/:id", async (req, res) => {

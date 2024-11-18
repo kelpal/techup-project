@@ -17,8 +17,6 @@
 }
 
 .post-container {
-    max-width: 800px;
-
     margin-top: 20px;
     margin-bottom: 20px;
     margin-left: auto;
@@ -27,7 +25,8 @@
 
 .post-container form button {
     font-size: 0.9rem;
-    padding: 8px 15px;
+    padding: 10px 20px;
+    margin: 5px;
     border: 1px solid #e74c3c;
     background-color: transparent;
     color: #e74c3c;
@@ -99,15 +98,59 @@ display: inline;
 }  
 
 .search-container {
-    max-width: 800px; /* Match .post-container */
     margin: 20px auto; /* Center horizontally */
     text-align: left;  /* Align text for the search box */
 }
 
 #search-input {
     width: 100%;
-    max-width: 800px;
     padding: 10px;
     font-size: 1rem;
     box-sizing: border-box; /* Ensure padding doesn't exceed container */
 }
+
+
+/* General styles for the pills */
+.attribute-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Default state for pills */
+.pill {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .pill:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .pill.selected {
+    background-color: #0077ff; /* Highlight color for selected */
+    color: #fff;
+    border-color: #0056b3;
+  }
+
+/* Attribute pills for locations.ejs */
+.attribute-pill {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 0.85rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+  
