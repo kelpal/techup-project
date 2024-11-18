@@ -2,23 +2,122 @@
     box-sizing: border-box;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+:root {
+    --dark: #2E282A;
+    --dark-1: #685c5c;
+    --dark-2: #8b6969;
+
+    --off-white-0: #fffcfd;
+    --off-white: #fffbf7;
+
+    --light-0: #faf3ed;
+    --light: #f7ede6;
+    --light-1: #f7d7d2;
+    --light-2: #ebbcb0;
+    
+    --main-cta: #AD6A6C;
+
+    --links-1: #633335;
+    --links-2: #813f3c;
+    --links-3: #42201f;
 }
 
+#input, textarea {
+    background-color: var(--off-white-0);
+    color: var(--dark);
+    outline: 1px solid var(--light-1);
+}
+
+
+input:focus, textarea:focus, button:focus {
+    outline: 1px solid var(--light-1);
+}
+
+/* Change the placeholder text color */
+input::placeholder, textarea::placeholder {
+    color: var(--dark-2); /* Use your desired color */
+    opacity: 1; /* Optional: ensures the placeholder text color is fully visible */
+}
+
+/* Change the color of helper text (usually inside small or span) */
+input + small, textarea + small, input + span, textarea + span {
+    color: #AD6A6C; /* Use your desired color */
+    font-size: 0.875rem; /* Optional: adjust the font size */
+    font-style: italic; /* Optional: make it italic */
+}
+
+body {
+    background-color: var(--light);
+}
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark);
+}
+
+hr {
+    border: 0; /* Remove the default border */
+    border-top: 2px solid var(--light-1); /* Set the color and thickness of the line */
+    margin: 20px 0; /* Optional: Adjust spacing around the horizontal rule */
+}
+
+/* Optional: If you want to change the background color of other specific elements */
+header, .post-container, .about-container, .search-container {
+    background-color: var(--light);
+}
+
+footer {
+    background-color: var(--light-0);
+    text-align: left;
+    padding: 20px;
+    margin-top: 40px;
+    font-size: 0.5rem;
+    color: var(--dark-1);
+    border-top: 1px solid var(--light-2);
+}
+
+/* Set the default link color */
+a {
+    color: var(--links-1);
+    text-decoration: none; /* Optional: removes underline */
+}
+
+/* Set the color when the link is hovered */
+a:hover {
+    color: var(--links-2); /* Slightly darker shade for hover effect (optional) */
+    text-decoration: underline; /* Optional: adds underline on hover */
+}
+
+/* Optional: Set the active link color */
+a:active {
+    color: var(--links-3); /* Even darker color when the link is clicked */
+}
+
+.button {
+    background-color: var(--main-cta);
+    border: 1px solid var(--main-cta);
+    border-radius: 20px;
+    color: var(--off-white);
+}
+
+.button:hover {
+    background-color: var(--links-2);
+    color: var(--off-white);
+}
 
 .welcome-container {
     text-align: center;
 
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
 }
 
 .new-post-btn-container{
     text-align: center;
 
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 .post-container {
@@ -26,6 +125,9 @@ body, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
+    color: var(--dark);
+    background-color: var(--off-white);
+    box-shadow: 0px 0px 5px 0px var(--main-cta);
 }
 
 .post-container form {
@@ -40,7 +142,7 @@ body, h1, h2, h3, h4, h5, h6 {
     margin: 5px;
     border: none; /* Remove default border */
     background-color: transparent;
-    color: #e74c3c;
+    color: var(--main-cta);
     border-radius: 50%; /* Make button round */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -52,7 +154,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .post-container form button:hover {
-    background-color: #e74c3c;
+    background-color: var(--main-cta);
     color: white;
 }
 
@@ -103,7 +205,6 @@ body, h1, h2, h3, h4, h5, h6 {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     margin: 10px;
     padding: 5px;
-    font-family: Roboto, sans-serif;
     font-size: large;
     font-weight: bold;
 }
@@ -129,6 +230,12 @@ display: inline;
     width: 100%;
     padding: 10px;
     font-size: 1rem;
+
+    background-color: var(--off-white-0);
+    color: var(--dark);
+
+    outline: 1px solid var(--light-1);
+
     box-sizing: border-box; /* Ensure padding doesn't exceed container */
 }
 
@@ -145,35 +252,54 @@ display: inline;
     display: inline-block;
     padding: 10px 20px;
     margin: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--main-cta);
     border-radius: 25px;
-    background-color: #f9f9f9;
-    color: #333;
+    background-color: var(--off-white);
+    color: var(--dark);
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-  }
+}
   
-  .pill:hover {
-    background-color: #e0e0e0;
-  }
+.pill:hover {
+    background-color: var(--light-1);
+}
   
-  .pill.selected {
-    background-color: #0077ff; /* Highlight color for selected */
-    color: #fff;
-    border-color: #0056b3;
-  }
+
 
 /* Attribute pills for locations.ejs */
 .attribute-pill {
     display: inline-block;
     padding: 8px 16px;
-    margin: 1px;
-    border: 1px solid #ccc;
-    border-radius: 15px;
-    background-color: #f9f9f9;
-    color: #333;
+    margin: 5px 1px 0px;
+    border: 1px solid var(--main-cta);
+    border-radius: 25px;
+    background-color: var(--light-1);
+    color: var(--links-3);
     font-size: 0.85rem;
     text-align: center;
     white-space: nowrap;
   }
   
+/* Style the submit button */
+input[type="submit"] {
+    background-color: var(--main-cta); /* Background color */
+    color: #fff; /* Text color */
+    font-size: 1rem; /* Font size */
+    padding: 10px 20px; /* Padding */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for the submit button */
+input[type="submit"]:hover {
+    background-color: var(--links-1); /* Darker shade on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+/* Focus effect for the submit button */
+input[type="submit"]:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 5px rgba(173, 106, 108, 0.8); /* Add custom shadow on focus */
+}
