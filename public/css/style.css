@@ -66,6 +66,11 @@ header, .post-container, .about-container, .search-container {
     background-color: var(--light);
 }
 
+img {
+    display: block;
+    margin: 0 auto; /* Automatically adjusts the margins to center the image */
+}
+
 footer {
     background-color: var(--light-0);
     text-align: left;
