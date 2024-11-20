@@ -1,2 +1,2 @@
 # techup-project
-hello
+lepak one corner
